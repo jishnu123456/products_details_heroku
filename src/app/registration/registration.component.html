@@ -1,0 +1,170 @@
+<p-toast></p-toast>
+<div class="login-container">
+    <div class="login-box-main">
+      <div class="container-fluid">
+          <div class="p-5">
+            <div>
+              <h1>
+                Registration
+              </h1>
+              <div>
+                <form [formGroup]="registrationForm" novalidate>
+                  <div class="d-flex">
+                    <div class="form-group m-2">
+                      <span class="p-input-icon-right">
+                        <input type="text" pInputText id="Name" 
+                        [(ngModel)]="registration.name" class="form-control"
+                           formControlName="name" placeholder="Name" 
+                           [ngClass]="{
+                             'invalid-field':
+                             registrationForm
+                                 .get('name')
+                                 ?.hasError('required') && submitted
+                           }"
+                           required/>
+                     </span>
+                  </div>
+                 <div class="form-group m-2">
+                   <span class="p-input-icon-right">
+                      <input pInputText type="email" [(ngModel)]="registration.email" class="form-control" id="Email"
+                       formControlName="email"  placeholder="Email"
+                       [ngClass]="{
+                         'invalid-field':
+                         registrationForm
+                             .get('email')
+                             ?.hasError('required') && submitted || this.registrationForm.get('email')?.hasError('email')
+                       }"
+                         required />
+                         <small class="invalid-text" *ngIf="
+                         registrationForm.get('email')?.touched 
+                         && this.registrationForm.get('email')?.hasError('email')
+                       ">Email must be in a correct format</small>
+  </span>
+                  
+                 </div>
+                 <div class="form-group m-2">
+                   <span class="p-input-icon-right">
+                      <input pInputText type="text" [(ngModel)]="registration.phone" id="phone" class="form-control"
+                         formControlName="phone" placeholder="Phone"
+                         [ngClass]="{
+                           'invalid-field':
+                           registrationForm
+                               .get('phone')
+                               ?.hasError('required') && submitted
+                         }"
+                         (keypress)="onlyNumberKey($event)"
+                       required />
+                   </span>
+                 </div>
+                  </div>
+                  <div class="align-items-center">
+                      <div>
+                        <span>Billing Address:</span>
+                      </div>
+                      <div class="d-flex">
+                        <div class="form-group m-2">
+                            <span class="p-input-icon-right">
+                               <input pInputText type="text" [(ngModel)]="registration.billingAddress" id="billingAddress" class="form-control"
+                                  formControlName="billingAddress" placeholder="Address"
+                                  [ngClass]="{
+                                    'invalid-field':
+                                    registrationForm
+                                        .get('billingAddress')
+                                        ?.hasError('required') && submitted
+                                  }"
+                                required />
+                            </span>
+                          </div>
+                          <div class="form-group m-2">
+                            <span class="p-input-icon-right">
+                               <input pInputText type="text" [(ngModel)]="registration.billingPinCode" id="billingPinCode" class="form-control"
+                                  formControlName="billingPinCode" placeholder="Phone"
+                                  [ngClass]="{
+                                    'invalid-field':
+                                    registrationForm
+                                        .get('billingPinCode')
+                                        ?.hasError('required') && submitted
+                                  }"
+                                  (keypress)="onlyNumberKey($event)"
+                                required />
+                            </span>
+                          </div>
+                          <div class="form-group m-2">
+                            <span class="p-input-icon-right">
+                               <input pInputText type="text" [(ngModel)]="registration.billingLandline" id="billingLandline" class="form-control"
+                                  formControlName="billingLandline" placeholder="Phone"
+                                  [ngClass]="{
+                                    'invalid-field':
+                                    registrationForm
+                                        .get('billingLandline')
+                                        ?.hasError('required') && submitted
+                                  }"
+                                  (keypress)="onlyNumberKey($event)"
+                                required />
+                            </span>
+                          </div>
+                      </div>
+                   
+                  </div>
+                  <div class="align-items-center">
+                      <div>
+                        <span>Shipping Address:</span>
+                        <button type="button" class="btn btn-primary mb-2" style="margin-left: 521px;" (click)="addAddress()">Add</button>
+                      </div>
+                      <div class="d-flex" *ngFor="let address of addresses; let i = index">
+                        <div class="form-group m-2">
+                            <span class="p-input-icon-right">
+                               <input pInputText type="text" [(ngModel)]="registration.shippingAddress" id="billingAddress" class="form-control"
+                                  formControlName="shippingAddress" placeholder="Address"
+                                  [ngClass]="{
+                                    'invalid-field':
+                                    registrationForm
+                                        .get('shippingAddress')
+                                        ?.hasError('required') && submitted
+                                  }"
+                                required />
+                            </span>
+                          </div>
+                          <div class="form-group m-2">
+                            <span class="p-input-icon-right">
+                               <input pInputText type="text" [(ngModel)]="registration.shippingPinCode" id="billingPinCode" class="form-control"
+                                  formControlName="shippingPinCode" placeholder="Phone"
+                                  [ngClass]="{
+                                    'invalid-field':
+                                    registrationForm
+                                        .get('shippingPinCode')
+                                        ?.hasError('required') && submitted
+                                  }"
+                                  (keypress)="onlyNumberKey($event)"
+                                required />
+                            </span>
+                          </div>
+                          <div class="form-group m-2">
+                            <span class="p-input-icon-right">
+                               <input pInputText type="text" [(ngModel)]="registration.shippingLandline" id="shippingLandline" class="form-control"
+                                  formControlName="shippingLandline" placeholder="Phone"
+                                  [ngClass]="{
+                                    'invalid-field':
+                                    registrationForm
+                                        .get('shippingLandline')
+                                        ?.hasError('required') && submitted
+                                  }"
+                                  (keypress)="onlyNumberKey($event)"
+                                required />
+                            </span>
+                          </div>
+                          <div class="form-group m-2" *ngIf="removeButtonVisibility">
+                            <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress(i)">Remove</button>
+                          </div>
+                      </div>
+                  </div>
+                  <button type="button"  class="btn btn-primary mb-2" (click)="register()">Register</button>
+                </form>
+              </div>
+               
+            </div>
+             </div>
+          </div>
+      </div>
+    </div>
+ 

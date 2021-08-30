@@ -1,0 +1,54 @@
+<nav class="navbar navbar-light bg-light navbar-bgcolor" >
+    <div>
+        <a class="navbar-brand header"  (click)="userCartDetails()">Cart</a>
+        <a class="navbar-brand header"  (click)="getProducts()">Products</a>
+        <a class="navbar-brand header logout"  (click)="logout()">Logout</a>
+    </div>
+  </nav>
+  <p-toast></p-toast>
+  <div *ngIf="productVisibility">
+      <div class="fw-bold text-center h2">
+          <span>
+              {{pageTitle}}
+          </span>
+      </div>
+    <div class="card">
+        <p-dataView #dv [value]="productDetails" filterBy="name"
+             layout="grid" >
+            <ng-template let-product pTemplate="gridItem">
+                <div class="p-md-3">
+                    <div class="product-grid-item card">
+                        <div class="product-grid-item-content">
+                            <img [src]="product.image" class="d-flex" style="width: 64px;" [alt]="product.name"/>
+                            <div class="product-name">{{product.title}}</div>
+                         </div>
+                        <div class="product-grid-item-bottom">
+                            <span class="product-price">${{product.price}}</span>
+                         </div>
+                         <p-button id="view" (click)="viewDetails(product)">View</p-button>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataView>
+    </div>
+</div>
+<div *ngIf="!productVisibility">    
+    <div  style="margin-left: 526px;margin-top: 50px;">
+        <p-card  [style]="{width: '360px',height:'500px'}"  styleClass="p-card-shadow" class="text-center fw-bold">
+            <ng-template pTemplate="header">
+                <img [src]="indivijualProduct.image" class="d-flex" style="width: 78px;margin-left: 122px;" [alt]="indivijualProduct.name"/>
+            </ng-template>
+            <ng-template pTemplate="body">
+                <div class="product-name fw-bold">Name : {{indivijualProduct.title}}</div>
+                <div>Description : {{indivijualProduct.description}}</div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <span class="product-price fw-bold">Price : ${{indivijualProduct.price}}</span>
+                <div style="margin-top: 27px;">
+                         <p-button id="back" class="float-md-end" (click)="back()" >Back to List</p-button>
+                          <p-button id="cart"  class="float-md-start" (click)="addToCart(indivijualProduct)">Add to Cart</p-button>
+                 </div>
+            </ng-template>
+        </p-card>
+    </div>
+</div>
